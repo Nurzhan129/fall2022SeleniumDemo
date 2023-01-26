@@ -7,6 +7,7 @@ import org.openqa.selenium.devtools.v85.target.model.SessionID;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
@@ -97,11 +98,30 @@ public class SeleniumExceptions extends BaseTest{
 
     @Test
     public void ElementNotInteractableException() {
+        // element not intractable
         browserHelper.openUrl("https://demoqa.com/radio-button");
-//        driver.findElement(By.id("noRadio")).sendKeys("saas");
+//        driver.findElement(By.id("noRadio")).click();
+        driver.findElement(By.id("noRadio")).sendKeys("saas");
     }
     @Test
-    public void ElementClickInterceptedException(){
-
+    public void elementClickInterceptedExceptionTest(){
+        browserHelper.openUrl("https://www.imoving.com/");
+        WebElement selectMenu = driver.findElement(By.id("houseTypeSelectList"));
+        Select select = new Select(selectMenu);
+        select.selectByVisibleText("My House");
+        Select select1 = new Select(driver.findElement(By.id("hp-nav-select-house")));
+        select1.selectByVisibleText("Just a few Items");
+        driver.findElement(By.xpath("//button[text()='Compare Quotes']")).click();
+        Helper.pause(3000);
+        driver.findElement(By.xpath("//a[@class='btn btn-blue col-xs-6']")).click();
+        Helper.pause(3000);
+        driver.findElement(By.xpath(".//a[@id='closeTutorial']")).click();
+        Helper.pause(3000);
+    }
+    @Test
+    public void NoSuchAttributeException(){
+        browserHelper.openUrl("https://demoqa.com/text-box");
+        WebElement element = driver.findElement(By.id("userNAme"));
+        String name = element.getAttribute("Name");
     }
 }
